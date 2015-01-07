@@ -2,6 +2,7 @@ package arena
 
 type ArenaAllocator interface {
 	AllocBytes(n int) []byte
+	AllocBytesWithLen(length int, capability int) []byte
 	Reset()
 }
 
@@ -22,6 +23,11 @@ func (s *SimpleArenaAllocator) AllocBytes(n int) []byte {
 	}
 
 	return make([]byte, 0, n)
+}
+
+func (s *SimpleArenaAllocator) AllocBytesWithLen(length int, capability int) []byte {
+	slice := s.AllocBytes(capability)
+	return slice[:length:capability]
 }
 
 func (s *SimpleArenaAllocator) Reset() {

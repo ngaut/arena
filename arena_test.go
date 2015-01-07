@@ -16,7 +16,7 @@ func TestSimpleArenaAllocator(t *testing.T) {
 	}
 
 	if cap(slice) != 10 {
-		t.Error("slice len not match, expect 0 bug got", cap(slice))
+		t.Error("slice len not match, expect 10 bug got", cap(slice))
 	}
 
 	slice = arena.AllocBytes(20)
@@ -29,7 +29,7 @@ func TestSimpleArenaAllocator(t *testing.T) {
 	}
 
 	if cap(slice) != 20 {
-		t.Error("slice len not match, expect 0 bug got", cap(slice))
+		t.Error("slice len not match, expect 20 bug got", cap(slice))
 	}
 
 	slice = arena.AllocBytes(1024)
@@ -43,7 +43,21 @@ func TestSimpleArenaAllocator(t *testing.T) {
 	}
 
 	if cap(slice) != 1024 {
-		t.Error("slice len not match, expect 0 bug got", cap(slice))
+		t.Error("slice len not match, expect 1024 bug got", cap(slice))
+	}
+
+	slice = arena.AllocBytesWithLen(2, 10)
+
+	if arena.off != 40 {
+		t.Error("off not match, expect 40 bug got", arena.off)
+	}
+
+	if len(slice) != 2 {
+		t.Error("slice len not match, expect 2 bug got", len(slice))
+	}
+
+	if cap(slice) != 10 {
+		t.Error("slice len not match, expect 10 bug got", cap(slice))
 	}
 
 	arena.Reset()
