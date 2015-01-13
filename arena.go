@@ -11,6 +11,24 @@ type SimpleArenaAllocator struct {
 	off   int
 }
 
+type stdAllocator struct {
+}
+
+func (a *stdAllocator) AllocBytes(n int) []byte {
+	return make([]byte, 0, n)
+}
+
+func (a *stdAllocator) AllocBytesWithLen(length int, capability int) []byte {
+	return make([]byte, length, capability)
+}
+
+func (a *stdAllocator) Reset() {
+}
+
+var _ ArenaAllocator = &stdAllocator{}
+
+var StdAllocator = &stdAllocator{}
+
 func NewArenaAllocator(capability int) *SimpleArenaAllocator {
 	return &SimpleArenaAllocator{arena: make([]byte, 0, capability)}
 }
