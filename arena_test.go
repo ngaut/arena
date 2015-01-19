@@ -69,3 +69,23 @@ func TestSimpleArenaAllocator(t *testing.T) {
 		t.Error("off should be 0")
 	}
 }
+
+func TestStdAllocator(t *testing.T) {
+	slice := StdAllocator.AllocBytes(20)
+	if len(slice) != 0 {
+		t.Error("length not match")
+	}
+
+	if cap(slice) != 20 {
+		t.Error("cap not match")
+	}
+
+	slice = StdAllocator.AllocBytesWithLen(10, 20)
+	if len(slice) != 10 {
+		t.Error("length not match")
+	}
+
+	if cap(slice) != 20 {
+		t.Error("cap not match")
+	}
+}
